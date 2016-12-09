@@ -124,7 +124,7 @@ cd $moodleDirectory
 chown -R $wwwDaemonUserGroup html
 chmod -R 770 html
 
-# create moodledata directory
-mkdir $moodleDirectory/moodledata
-chown -R $wwwDaemonUserGroup $moodleDirectory/moodledata
-chmod -R 770 $moodleDirectory/moodledata
+# create datadrive directory
+mkdir $moodleDirectory/datadrive
+chown -R $wwwDaemonUserGroup $moodleDirectory/datadrive
+chmod -R 770 $moodleDirectory/datadrive
