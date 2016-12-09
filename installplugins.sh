@@ -58,7 +58,8 @@ git clone -b master https://bitbucket.org/mikegrant/bcu-course-checks-block.git 
 git clone -b master https://github.com/Hipjea/studentstracker.git studentstracker
 git clone -b master https://github.com/deraadt/moodle-block_completion_progress.git completion_progress
 git clone -b master https://github.com/FMCorz/moodle-block_xp.git xp
-
+git clone -b master https://github.com/deraadt/moodle-block_heatmap.git heatmap
+git clone -b MOODLE_30_STABLE --single-branch https://github.com/jleyva/moodle-block_configurablereports.git configurable_reports
 
 # Grade Exports
 cd $moodleDirectory/grade/export
@@ -93,6 +94,7 @@ cd cd $moodleDirectory/html/course/format
 
 git clone -b MOODLE_31 --single-branch https://github.com/gjb2048/moodle-format_topcoll.git topcoll
 git clone -b MOODLE_31 --single-branch https://github.com/gjb2048/moodle-format_grid.git grid
+git clone -b MOODLE_31 --single-branch https://github.com/davidherney/moodle-format_onetopic.git onetopic
 
 # Themes
 cd cd $moodleDirectory/html/theme
@@ -109,12 +111,11 @@ git clone -b master https://github.com/markward/local_autogroup.git autogroup
 cd $moodleDirectory/admin/tool
 
 git clone -b master https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcsv
+git clone -b $moodleVersion --single-branch https://github.com/andrewnicols/moodle-local_usertours.git usertours
 
 # Alternative Login Form
 cd $moodleDirectory/html
 git clone -b master https://github.com/ccmschools/learnerlink-loginform.git learnerlink-loginform
-
-
 
 # --------------------------------------------------------------------------------------------------------------
 
@@ -127,11 +128,3 @@ chmod -R 770 html
 mkdir $moodleDirectory/moodledata
 chown -R $wwwDaemonUserGroup $moodleDirectory/moodledata
 chmod -R 770 $moodleDirectory/moodledata
-
-# create cron entry
-# It is scheduled for once per day. It can be changed as needed.
-echo '0 0 * * * php /var/www/html/admin/cli/cron.php > /dev/null 2>&1' > cronjob
-crontab cronjob
-
-# restart Apache
-apachectl restart
