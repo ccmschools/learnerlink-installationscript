@@ -42,22 +42,28 @@ cd $moodleDirectory/html/mod
 
 git clone -b $moodleVersion --single-branch https://github.com/markn86/moodle-mod_customcert.git customcert
 git clone -b $moodleVersion --single-branch https://github.com/remotelearner/moodle-mod_questionnaire.git questionnaire
-git clone https://github.com/davosmith/moodle-checklist.git checklist
+git clone -b master https://github.com/davosmith/moodle-checklist.git checklist
+git clone -b master https://github.com/ndunand/moodle-mod_choicegroup.git choicegroup
 
 # Quiz/Access Rules
 cd $moodleDirectory/html/mod/quiz/accessrule
 
-git clone https://github.com/jleyva/moodle-quizaccess_offlineattempts.git offlineattempts
+git clone -b master https://github.com/jleyva/moodle-quizaccess_offlineattempts.git offlineattempts
 
 # Blocks
 cd $moodleDirectory/html/blocks
 
-git clone https://github.com/davosmith/moodle-block_checklist.git checklist
+git clone -b master https://github.com/davosmith/moodle-block_checklist.git checklist
+git clone -b master https://bitbucket.org/mikegrant/bcu-course-checks-block.git bcu_course_checks
+git clone -b master https://github.com/Hipjea/studentstracker.git studentstracker
+git clone -b master https://github.com/deraadt/moodle-block_completion_progress.git completion_progress
+git clone -b master https://github.com/FMCorz/moodle-block_xp.git xp
+
 
 # Grade Exports
 cd $moodleDirectory/grade/export
 
-git clone https://github.com/davosmith/moodle-grade_checklist.git checklist
+git clone -b master https://github.com/davosmith/moodle-grade_checklist.git checklist
 
 # Filters
 
@@ -71,7 +77,8 @@ git clone https://github.com/davosmith/moodle-grade_checklist.git checklist
 # Availability Restrictions
 cd $moodleDirectory/html/availability/condition
 
-git clone https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
+git clone -b master https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
+git clone -b master https://github.com/FMCorz/moodle-availability_xp.git xp
 
 # Course Formats
 
@@ -86,7 +93,7 @@ git clone -b $moodleVersion --single-branch https://github.com/moodlehq/moodle-l
 
 # Alternative Login Form
 cd $moodleDirectory/html
-git clone https://github.com/ccmschools/learnerlink-loginform.git learnerlink-loginform
+git clone -b master https://github.com/ccmschools/learnerlink-loginform.git learnerlink-loginform
 
 
 
