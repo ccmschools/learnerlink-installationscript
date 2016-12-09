@@ -31,7 +31,6 @@ rm -rf o365-moodle-$moodleVersion/repository/onenote
    
 cp -r o365-moodle-$moodleVersion/* html
 rm -rf o365-moodle-$moodleVersion
-fi
 
 # --------------------------------------------------------------------------------------------------------------
 # Install custom plugins for this version. Note: this code will need to be adjusted each time Moodle is upgraded. Preferred method is to use git.
