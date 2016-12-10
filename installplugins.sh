@@ -123,12 +123,12 @@ cd $moodleDirectory/htdocs/local
 
 git clone -b $moodleVersion --single-branch https://github.com/moodlehq/moodle-local_mobile.git mobile
 git clone -b master https://github.com/markward/local_autogroup.git autogroup
+git clone -b $moodleVersion --single-branch https://github.com/andrewnicols/moodle-local_usertours.git usertours
 
 # Admin Tools
 cd $moodleDirectory/htdocs/admin/tool
 
 git clone -b master https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcsv
-git clone -b $moodleVersion --single-branch https://github.com/andrewnicols/moodle-local_usertours.git usertours
 
 # Alternative Login Form
 cd $moodleDirectory/htdocs
