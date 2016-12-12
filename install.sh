@@ -1,147 +1,203 @@
 #!/bin/bash
 apt-get -y update
 
+# Define parameters
 moodleVersion="MOODLE_31_STABLE"
 moodleDirectory="/opt/bitnami/apps/moodle"
+moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
 
 # install moodle additional requirements
-apt-get -y install ghostscript
+apt-get -y install git-all ghostscript
 
-# install unzip
-apt-get install unzip
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
+# The following section installs the latest release of the Moodle 			#
+# version specified by $moodleVersion.							#
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
+cp $moodleDirectory/$moodleFolderName/config.php $moodleDirectory/config.php.backup
+rm -rf $moodleDirectory/$moodleFolderName
 cd $moodleDirectory
+git clone -b $moodleVersion --single-branch https://github.com/moodle/moodle.git $moodleFolderName
 
-# remove prepackaed (and likely outdated) Office 365 plugins
-rm -rf $moodleDirectory/htdocs/auth/oidc
-rm -rf $moodleDirectory/htdocs/blocks/microsoft
-rm -rf $moodleDirectory/htdocs/blocks/onenote
-rm -rf $moodleDirectory/htdocs/filter/oembed
-rm -rf $moodleDirectory/htdocs/local/microsoftservices
-rm -rf $moodleDirectory/htdocs/local/msaccount
-rm -rf $moodleDirectory/htdocs/local/o365
-rm -rf $moodleDirectory/htdocs/local/o365docs
-rm -rf $moodleDirectory/htdocs/local/office365
-rm -rf $moodleDirectory/htdocs/local/onenote
-rm -rf $moodleDirectory/htdocs/mod/assign/feedback/onenote
-rm -rf $moodleDirectory/htdocs/mod/assign/submission/onenote
-rm -rf $moodleDirectory/htdocs/repository/onenote
-rm -rf $moodleDirectory/htdocs/repository/office365
-rm -rf $moodleDirectory/htdocs/user/profile/field/o365
-rm -rf $moodleDirectory/htdocs/user/profile/field/oidc
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
+# The following section installs custom plugins for this version of Moodle.		#
+# Note: this code will need to be adjusted each time Moodle is upgraded. 		#
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
-# install Office 365 plugins
-curl -k --max-redirs 10 https://github.com/Microsoft/o365-moodle/archive/$moodleVersion.zip -L -o o365.zip
-unzip o365.zip
-    
-# The plugins below are not required for new installations
-rm -rf o365-moodle-$moodleVersion/blocks/onenote
-rm -rf o365-moodle-$moodleVersion/local/m*
-rm -rf o365-moodle-$moodleVersion/local/o365docs
-rm -rf o365-moodle-$moodleVersion/local/office365
-rm -rf o365-moodle-$moodleVersion/local/onenote
-rm -rf o365-moodle-$moodleVersion/mod/assign
-rm -rf o365-moodle-$moodleVersion/user/profile/
-rm -rf o365-moodle-$moodleVersion/repository/onenote	
-    
-#Copy office plugins to moodle and remove office unzipped folder
-   
-cp -r o365-moodle-$moodleVersion/* htdocs
-rm -rf o365-moodle-$moodleVersion
+# --------- Activity Modules -----------
+cd $moodleDirectory/$moodleFolderName/mod
 
-# --------------------------------------------------------------------------------------------------------------
-# Install custom plugins for this version. Note: this code will need to be adjusted each time Moodle is upgraded. Preferred method is to use git.
-apt-get -y install git-all
+git submodule add https://github.com/markn86/moodle-mod_customcert.git customcert
+cd customcert
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/mod
 
-# Activity Modules
-cd $moodleDirectory/htdocs/mod
+git submodule add https://github.com/remotelearner/moodle-mod_questionnaire.git questionnaire
+cd questionnaire
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/mod
 
-git clone -b $moodleVersion --single-branch https://github.com/markn86/moodle-mod_customcert.git customcert
-git clone -b $moodleVersion --single-branch https://github.com/remotelearner/moodle-mod_questionnaire.git questionnaire
-git clone -b master https://github.com/davosmith/moodle-checklist.git checklist
-git clone -b master https://github.com/ndunand/moodle-mod_choicegroup.git choicegroup
+git submodule add https://github.com/davosmith/moodle-checklist.git checklist
 
-# Quiz/Access Rules
-cd $moodleDirectory/htdocs/mod/quiz/accessrule
+git submodule add https://github.com/ndunand/moodle-mod_choicegroup.git choicegroup
 
-git clone -b master https://github.com/jleyva/moodle-quizaccess_offlineattempts.git offlineattempts
+#---------- Quiz/Access Rules -----------
+cd $moodleDirectory/$moodleFolderName/mod/quiz/accessrule
 
-# Blocks
-cd $moodleDirectory/htdocs/blocks
+git submodule add https://github.com/jleyva/moodle-quizaccess_offlineattempts.git offlineattempts
 
-git clone -b master https://github.com/davosmith/moodle-block_checklist.git checklist
-git clone -b master https://bitbucket.org/mikegrant/bcu-course-checks-block.git bcu_course_checks
-git clone -b master https://github.com/Hipjea/studentstracker.git studentstracker
-git clone -b master https://github.com/deraadt/moodle-block_completion_progress.git completion_progress
-git clone -b master https://github.com/FMCorz/moodle-block_xp.git xp
-git clone -b master https://github.com/deraadt/moodle-block_heatmap.git heatmap
-git clone -b MOODLE_30_STABLE --single-branch https://github.com/jleyva/moodle-block_configurablereports.git configurable_reports
+#---------- Blocks -----------
+cd $moodleDirectory/$moodleFolderName/blocks
 
-# Grade Exports
-cd $moodleDirectory/htdocs/grade/export
+git submodule add https://github.com/Microsoft/moodle-block_microsoft.git microsoft
+cd microsoft
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/blocks
 
-git clone -b master https://github.com/davosmith/moodle-grade_checklist.git checklist
+git submodule add https://github.com/davosmith/moodle-block_checklist.git checklist
 
-# Filters
+git submodule add https://bitbucket.org/mikegrant/bcu-course-checks-block.git bcu_course_checks
+cd bcu_course_checks
+git checkout -b master origin/master
+cd $moodleDirectory/$moodleFolderName/blocks
 
+git submodule add https://github.com/Hipjea/studentstracker.git studentstracker
 
-# Atto Plugins
-cd $moodleDirectory/htdocs/lib/editor/atto/plugins
+git submodule add https://github.com/deraadt/moodle-block_completion_progress.git completion_progress
 
-git clone -b master https://github.com/dthies/moodle-atto_fullscreen.git fullscreen
-git clone -b master https://github.com/moodleuulm/moodle-atto_styles.git styles
-git clone -b master https://github.com/cdsmith-umn/pastespecial.git pastespecial
-git clone -b master https://github.com/dthies/moodle-atto_cloze.git cloze
-git clone -b master https://github.com/damyon/moodle-atto_count.git count
+git submodule add https://github.com/FMCorz/moodle-block_xp.git xp
 
-# Enrolment Methods
-cd $moodleDirectory/htdocs/enrol
+git submodule add https://github.com/deraadt/moodle-block_heatmap.git heatmap
 
-git clone -b master https://github.com/markward/enrol_autoenrol.git autoenrol
+git submodule add https://github.com/jleyva/moodle-block_configurablereports.git configurable_reports
+cd configurable_reports
+git checkout -b MOODLE_30_STABLE origin/MOODLE_30_STABLE
+cd $moodleDirectory/$moodleFolderName/blocks
 
-# Availability Restrictions
-cd $moodleDirectory/htdocs/availability/condition
+#---------- Grade Exports -----------
+cd $moodleDirectory/$moodleFolderName/grade/export
 
-git clone -b master https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
-git clone -b master https://github.com/FMCorz/moodle-availability_xp.git xp
+git submodule add https://github.com/davosmith/moodle-grade_checklist.git checklist
 
-# Course Formats
-cd $moodleDirectory/htdocs/course/format
+#---------- Filters -----------
+cd $moodleDirectory/$moodleFolderName/filter
+git submodule add https://github.com/POETGroup/moodle-filter_oembed.git oembed
+cd oembed
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/filter
 
-git clone -b MOODLE_31 --single-branch https://github.com/gjb2048/moodle-format_topcoll.git topcoll
-git clone -b MOODLE_31 --single-branch https://github.com/gjb2048/moodle-format_grid.git grid
-git clone -b MOODLE_31 --single-branch https://github.com/davidherney/moodle-format_onetopic.git onetopic
+#---------- Authentication -----------
+cd $moodleDirectory/$moodleFolderName/auth
+git submodule add https://github.com/Microsoft/moodle-auth_oidc.git oidc
+cd oidc
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/auth
 
-# Themes
-cd $moodleDirectory/htdocs/theme
+#---------- Atto Plugins -----------
+cd $moodleDirectory/$moodleFolderName/lib/editor/atto/plugins
 
-git clone -b master https://github.com/gjb2048/moodle-theme_essential.git essential
+git submodule add https://github.com/dthies/moodle-atto_fullscreen.git fullscreen
 
-# Local Plugins
-cd $moodleDirectory/htdocs/local
+git submodule add https://github.com/moodleuulm/moodle-atto_styles.git styles
 
-git clone -b $moodleVersion --single-branch https://github.com/moodlehq/moodle-local_mobile.git mobile
-git clone -b master https://github.com/markward/local_autogroup.git autogroup
-git clone -b $moodleVersion --single-branch https://github.com/andrewnicols/moodle-local_usertours.git usertours
+git submodule add https://github.com/cdsmith-umn/pastespecial.git pastespecial
 
-# Admin Tools
-cd $moodleDirectory/htdocs/admin/tool
+git submodule add https://github.com/dthies/moodle-atto_cloze.git cloze
 
-git clone -b master https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcsv
+git submodule add https://github.com/damyon/moodle-atto_count.git count
 
-# Alternative Login Form
-cd $moodleDirectory/htdocs
-git clone -b master https://github.com/ccmschools/learnerlink-loginform.git learnerlink-loginform
+#---------- Enrolment Methods -----------
+cd $moodleDirectory/$moodleFolderName/enrol
 
-# --------------------------------------------------------------------------------------------------------------
+git submodule add https://github.com/markward/enrol_autoenrol.git autoenrol
+
+#---------- Availability Restrictions -----------
+# 
+cd $moodleDirectory/$moodleFolderName/availability/condition
+
+git submodule add https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
+
+git submodule add https://github.com/FMCorz/moodle-availability_xp.git xp
+
+#---------- Course Formats -----------
+cd $moodleDirectory/$moodleFolderName/course/format
+
+git submodule add https://github.com/gjb2048/moodle-format_topcoll.git topcoll
+cd topcoll
+git checkout -b MOODLE_31 origin/MOODLE_31
+cd $moodleDirectory/$moodleFolderName/course/format
+
+git submodule add https://github.com/gjb2048/moodle-format_grid.git grid
+cd grid
+git checkout -b MOODLE_31 origin/MOODLE_31
+cd $moodleDirectory/$moodleFolderName/course/format
+
+git submodule add https://github.com/davidherney/moodle-format_onetopic.git onetopic
+cd onetopic
+git checkout -b MOODLE_31 origin/MOODLE_31
+cd $moodleDirectory/$moodleFolderName/course/format
+
+#---------- Themes -----------
+cd $moodleDirectory/$moodleFolderName/theme
+
+git submodule add https://github.com/gjb2048/moodle-theme_essential.git essential
+
+#---------- Repositories -----------
+cd $moodleDirectory/$moodleFolderName/repository
+git submodule add https://github.com/Microsoft/moodle-repository_office365.git office365
+cd office365
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/repository
+
+#---------- Local Plugins -----------
+cd $moodleDirectory/$moodleFolderName/local
+
+git submodule add https://github.com/Microsoft/moodle-local_o365.git o365
+cd o365
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/local
+
+git submodule add https://github.com/moodlehq/moodle-local_mobile.git mobile
+cd mobile
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/local
+
+git submodule add https://github.com/markward/local_autogroup.git autogroup
+
+git submodule add https://github.com/andrewnicols/moodle-local_usertours.git usertours
+cd usertours
+git checkout -b $moodleVersion origin/$moodleVersion
+cd $moodleDirectory/$moodleFolderName/local
+
+#---------- Admin Tools -----------
+cd $moodleDirectory/$moodleFolderName/admin/tool
+
+git submodule add https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcsv
+
+#---------- Alternative Login Form -----------
+# 
+cd $moodleDirectory/$moodleFolderName
+git submodule add https://github.com/ccmschools/learnerlink-loginform.git learnerlink-loginform
+
+#---------- Wrapping it up -----------
+# **This will currently require authentication**
+cd $moodleDirectory/$moodleFolderName
+git commit -a -m "Moodle and plugins installed"
+git remote add mirror https://github.com/ccmschools/learnerlink.git
+git push mirror $moodleVersion
+ 
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
 # make the moodle directory writable for owner
 cd $moodleDirectory
-chown -R $wwwDaemonUserGroup htdocs
-chmod -R 770 htdocs
+chown -R $wwwDaemonUserGroup $moodleFolderName
+chmod -R 770 $moodleFolderName
 
 # create datadrive directory
 mkdir $moodleDirectory/datadrive
 chown -R $wwwDaemonUserGroup $moodleDirectory/datadrive
 chmod -R 770 $moodleDirectory/datadrive
+
+# Copy original config.php back into directory
+cp $moodleDirectory/config.php.backup $moodleDirectory/$moodleFolderName/config.php
