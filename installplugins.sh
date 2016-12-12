@@ -1,3 +1,13 @@
+#!/bin/bash
+apt-get -y update
+
+# Define parameters
+moodleVersion="MOODLE_31_STABLE"
+moodleDirectory="/d/GitHub"
+moodleFolderName="htdocs"
+wwwDaemonUserGroup="bitnami:daemon"
+
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs the latest release of the Moodle 						#
 # version specified by $moodleVersion.													#
@@ -6,7 +16,7 @@
 cp $moodleDirectory/$moodleFolderName/config.php $moodleDirectory/config.php.backup
 rm -rf $moodleDirectory/$moodleFolderName
 cd $moodleDirectory
-git clone -b $moodleVersion --single-branch https://github.com/markn86/moodle-mod_customcert.git $moodleFolderName
+git clone -b $moodleVersion --single-branch https://github.com/moodle/moodle.git $moodleFolderName
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs custom plugins for this version of Moodle.				#
@@ -174,5 +184,5 @@ cd $moodleDirectory/$moodleFolderName
 git commit -a -m "Moodle and plugins installed"
 git remote add mirror https://github.com/ccmschools/learnerlink.git
 git push mirror $moodleVersion
- 
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
