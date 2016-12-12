@@ -3,8 +3,8 @@ apt-get -y update
 
 # Define parameters
 moodleVersion="MOODLE_31_STABLE"
-moodleDirectory="/opt/bitnami/apps/moodle"
-moodleFolderName="htdocs"
+moodleDirectory="/d/GitHub"
+moodleFolderName="moodle"
 wwwDaemonUserGroup="bitnami:daemon"
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
