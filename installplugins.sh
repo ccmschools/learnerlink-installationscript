@@ -7,14 +7,6 @@ moodleDirectory="/opt/bitnami/apps/moodle"
 moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
 
-# Install additional requirements and change folder permisions (yes=1/no=0)? Do this only if deploying to a server (i.e. don't run on local git repo)
-additionalReqsPerms="no"
-
-if [$additionalReqsPerms = yes]
-	# install moodle additional requirements
-	apt-get -y install git-all ghostscript
-fi
-
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs custom plugins for this version of Moodle.				#
 # Note: this code will need to be adjusted each time Moodle is upgraded. 				#
@@ -246,15 +238,3 @@ git remote add mirror https://github.com/ccmschools/learnerlink.git
 git push mirror $moodleVersion
  
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
-
-if [$additionalReqsPerms = yes]
-	# make the moodle directory writable for owner
-	cd $moodleDirectory
-	chown -R $wwwDaemonUserGroup $moodleFolderName
-	chmod -R 770 $moodleFolderName
-
-	# create datadrive directory
-	mkdir $moodleDirectory/datadrive
-	chown -R $wwwDaemonUserGroup $moodleDirectory/datadrive
-	chmod -R 770 $moodleDirectory/datadrive
-fi
