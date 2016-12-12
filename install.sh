@@ -110,7 +110,7 @@ git submodule add https://github.com/damyon/moodle-atto_count.git count
 #---------- Enrolment Methods -----------
 cd $moodleDirectory/$moodleFolderName/enrol
 
-git submodule add https://github.com/markward/enrol_autoenrol.git autoenrol
+# git submodule add https://github.com/markward/enrol_autoenrol.git autoenrol
 
 #---------- Availability Restrictions -----------
 # 
@@ -163,7 +163,7 @@ cd mobile
 git checkout -b $moodleVersion origin/$moodleVersion
 cd $moodleDirectory/$moodleFolderName/local
 
-git submodule add https://github.com/markward/local_autogroup.git autogroup
+# git submodule add https://github.com/markward/local_autogroup.git autogroup
 
 git submodule add https://github.com/andrewnicols/moodle-local_usertours.git usertours
 cd usertours
