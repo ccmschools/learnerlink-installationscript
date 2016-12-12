@@ -189,15 +189,16 @@ git push mirror $moodleVersion
  
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
+# Copy original config.php back into directory
+cp $moodleDirectory/config.php.backup $moodleDirectory/$moodleFolderName/config.php
+
 # make the moodle directory writable for owner
 cd $moodleDirectory
 chown -R $wwwDaemonUserGroup $moodleFolderName
-chmod -R 770 $moodleFolderName
+find $moodleFolderName -type d -exec chmod 755 {} \;
+find $moodleFolderName -type f -exec chmod 644 {} \;
 
 # create datadrive directory
 mkdir $moodleDirectory/datadrive
 chown -R $wwwDaemonUserGroup $moodleDirectory/datadrive
-chmod -R 770 $moodleDirectory/datadrive
-
-# Copy original config.php back into directory
-cp $moodleDirectory/config.php.backup $moodleDirectory/$moodleFolderName/config.php
+chmod -R 750 $moodleDirectory/datadrive
