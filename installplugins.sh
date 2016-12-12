@@ -1,12 +1,10 @@
 #!/bin/bash
-apt-get -y update
 
 # Define parameters
 moodleVersion="MOODLE_31_STABLE"
 moodleDirectory="/d/GitHub"
 moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
-
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs the latest release of the Moodle 						#
