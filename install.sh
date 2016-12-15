@@ -6,6 +6,8 @@ moodleVersion="MOODLE_31_STABLE"
 moodleDirectory="/opt/bitnami/apps/moodle"
 moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
+adminUser="Peter Sercombe"
+adminEmail="peter.sercombe@groves.qld.edu.au"
 
 # install moodle additional requirements
 apt-get -y install git-all ghostscript
@@ -184,12 +186,14 @@ git submodule add https://github.com/ccmschools/learnerlink-loginform.git loginf
 
 #--------- Tell git to ignore the axcelerate plugin ------
 cd $moodleDirectory/$moodleFolderName
-echo '/auth/axcelerate/' > .git/info/exclude
-echo '/local/axcelerate*/' > .git/info/exclude
+echo '/auth/axcelerate/' >> .git/info/exclude
+echo '/local/axcelerate*/' >> .git/info/exclude
 
 #---------- Wrapping it up -----------
 # **This will currently require authentication**
 cd $moodleDirectory/$moodleFolderName
+git config --global user.email "$adminEmail"
+git config --global user.name "$adminUser"
 git commit -a -m "Moodle and plugins installed"
 git remote add mirror https://github.com/ccmschools/learnerlink.git
 git push mirror $moodleVersion
