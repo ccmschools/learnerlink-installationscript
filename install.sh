@@ -87,6 +87,8 @@ cd oembed
 git checkout -b $moodleVersion origin/$moodleVersion
 cd $moodleDirectory/$moodleFolderName/filter
 
+git submodule add https://github.com/ccmschools/learnerlink-filter_fontawesome.git fontawesome
+
 #---------- Authentication -----------
 cd $moodleDirectory/$moodleFolderName/auth
 git submodule add https://github.com/Microsoft/moodle-auth_oidc.git oidc
