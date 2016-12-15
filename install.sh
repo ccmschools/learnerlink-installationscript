@@ -193,7 +193,6 @@ git config --global user.email "$adminEmail"
 git config --global user.name "$adminUser"
 git commit -a -m "Moodle and plugins installed"
 git remote add mirror https://github.com/ccmschools/learnerlink.git
-git push mirror $moodleVersion
  
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
