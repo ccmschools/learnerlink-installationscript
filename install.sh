@@ -60,9 +60,6 @@ cd $moodleDirectory/$moodleFolderName/blocks
 git submodule add https://github.com/davosmith/moodle-block_checklist.git checklist
 
 git submodule add https://bitbucket.org/mikegrant/bcu-course-checks-block.git bcu_course_checks
-cd bcu_course_checks
-git checkout -b master origin/master
-cd $moodleDirectory/$moodleFolderName/blocks
 
 git submodule add https://github.com/Hipjea/studentstracker.git studentstracker
 
