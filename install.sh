@@ -141,7 +141,7 @@ cd $moodleDirectory/$moodleFolderName/course/format
 #---------- Themes -----------
 cd $moodleDirectory/$moodleFolderName/theme
 
-git submodule add https://github.com/gjb2048/moodle-theme_essential.git essential
+git submodule add https://github.com/ccmschools/moodle-theme_essential.git essential
 
 #---------- Repositories -----------
 cd $moodleDirectory/$moodleFolderName/repository
