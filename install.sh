@@ -182,6 +182,11 @@ git submodule add https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcs
 cd $moodleDirectory/$moodleFolderName
 git submodule add https://github.com/ccmschools/learnerlink-loginform.git loginform
 
+#--------- Tell git to ignore the axcelerate plugin ------
+cd $moodleDirectory/$moodleFolderName
+echo '/auth/axcelerate/' > .git/info/exclude
+echo '/local/axcelerate*/' > .git/info/exclude
+
 #---------- Wrapping it up -----------
 # **This will currently require authentication**
 cd $moodleDirectory/$moodleFolderName
