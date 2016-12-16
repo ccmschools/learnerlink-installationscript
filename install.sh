@@ -81,7 +81,7 @@ git submodule add https://github.com/davosmith/moodle-grade_checklist.git checkl
 
 #---------- Filters -----------
 cd $moodleDirectory/$moodleFolderName/filter
-git submodule add https://github.com/POETGroup/moodle-filter_oembed.git oembed
+git submodule add https://github.com/Microsoft/moodle-filter_oembed.git oembed
 cd oembed
 git checkout -b $moodleVersion origin/$moodleVersion
 cd $moodleDirectory/$moodleFolderName/filter
