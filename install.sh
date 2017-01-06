@@ -33,11 +33,13 @@ cd $moodleDirectory/$moodleFolderName/mod
 git submodule add https://github.com/markn86/moodle-mod_customcert.git customcert
 cd customcert
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/mod
 
 git submodule add https://github.com/remotelearner/moodle-mod_questionnaire.git questionnaire
 cd questionnaire
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/mod
 
 git submodule add https://github.com/davosmith/moodle-checklist.git checklist
@@ -55,6 +57,7 @@ cd $moodleDirectory/$moodleFolderName/blocks
 git submodule add https://github.com/Microsoft/moodle-block_microsoft.git microsoft
 cd microsoft
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/blocks
 
 git submodule add https://github.com/davosmith/moodle-block_checklist.git checklist
@@ -72,6 +75,7 @@ git submodule add https://github.com/deraadt/moodle-block_heatmap.git heatmap
 git submodule add https://github.com/jleyva/moodle-block_configurablereports.git configurable_reports
 cd configurable_reports
 git checkout -b MOODLE_30_STABLE origin/MOODLE_30_STABLE
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/blocks
 
 #---------- Grade Exports -----------
@@ -84,6 +88,7 @@ cd $moodleDirectory/$moodleFolderName/filter
 git submodule add https://github.com/Microsoft/moodle-filter_oembed.git oembed
 cd oembed
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/filter
 
 git submodule add https://github.com/ccmschools/learnerlink-filter_fontawesome.git fontawesome
@@ -93,6 +98,7 @@ cd $moodleDirectory/$moodleFolderName/auth
 git submodule add https://github.com/Microsoft/moodle-auth_oidc.git oidc
 cd oidc
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/auth
 
 #---------- Atto Plugins -----------
@@ -127,16 +133,19 @@ cd $moodleDirectory/$moodleFolderName/course/format
 git submodule add https://github.com/gjb2048/moodle-format_topcoll.git topcoll
 cd topcoll
 git checkout -b MOODLE_31 origin/MOODLE_31
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/gjb2048/moodle-format_grid.git grid
 cd grid
 git checkout -b MOODLE_31 origin/MOODLE_31
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/davidherney/moodle-format_onetopic.git onetopic
 cd onetopic
 git checkout -b MOODLE_31 origin/MOODLE_31
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 #---------- Themes -----------
@@ -149,6 +158,7 @@ cd $moodleDirectory/$moodleFolderName/repository
 git submodule add https://github.com/Microsoft/moodle-repository_office365.git office365
 cd office365
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/repository
 
 #---------- Local Plugins -----------
@@ -157,11 +167,13 @@ cd $moodleDirectory/$moodleFolderName/local
 git submodule add https://github.com/Microsoft/moodle-local_o365.git o365
 cd o365
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
 
 git submodule add https://github.com/moodlehq/moodle-local_mobile.git mobile
 cd mobile
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
 
 git submodule add https://github.com/ccmschools/local_autogroup.git autogroup
@@ -169,6 +181,7 @@ git submodule add https://github.com/ccmschools/local_autogroup.git autogroup
 git submodule add https://github.com/andrewnicols/moodle-local_usertours.git usertours
 cd usertours
 git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
 
 #---------- Admin Tools -----------
