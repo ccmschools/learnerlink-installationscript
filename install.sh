@@ -2,7 +2,7 @@
 apt-get -y update
 
 # Define parameters
-moodleVersion="MOODLE_31_STABLE"
+moodleVersion="MOODLE_32_STABLE"
 moodleDirectory="/opt/bitnami/apps/moodle"
 moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
@@ -10,15 +10,18 @@ adminUser="Peter Sercombe"
 adminEmail="peter.sercombe@groves.qld.edu.au"
 
 # install moodle additional requirements
-apt-get -y install git-all ghostscript
+apt-get -y install git-all
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs the latest release of the Moodle 			#
 # version specified by $moodleVersion.							#
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
+# Backup the config.php file that shipped with the Bitnami image (might need the database password from it)
 cp $moodleDirectory/$moodleFolderName/config.php $moodleDirectory/config.php.backup
+# Remove existing Moodle software
 rm -rf $moodleDirectory/$moodleFolderName
+# Install/clone the latest stable branch of the desired Moodle version from the official git repository
 cd $moodleDirectory
 git clone -b $moodleVersion --single-branch https://github.com/moodle/moodle.git $moodleFolderName
 
@@ -45,11 +48,6 @@ cd $moodleDirectory/$moodleFolderName/mod
 git submodule add https://github.com/davosmith/moodle-checklist.git checklist
 
 git submodule add https://github.com/ndunand/moodle-mod_choicegroup.git choicegroup
-
-#---------- Quiz/Access Rules -----------
-cd $moodleDirectory/$moodleFolderName/mod/quiz/accessrule
-
-git submodule add https://github.com/jleyva/moodle-quizaccess_offlineattempts.git offlineattempts
 
 #---------- Blocks -----------
 cd $moodleDirectory/$moodleFolderName/blocks
@@ -85,12 +83,13 @@ git submodule add https://github.com/davosmith/moodle-grade_checklist.git checkl
 
 #---------- Filters -----------
 cd $moodleDirectory/$moodleFolderName/filter
-git submodule add https://github.com/Microsoft/moodle-filter_oembed.git oembed
+git submodule add https://github.com/PoetOS/moodle-filter_oembed.git oembed
 cd oembed
 git checkout -b $moodleVersion origin/$moodleVersion
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/filter
 
+# The following plugin doesn't have a git repository. Instead the .zip file is downloaded from the Moodle plugins directory and uploaded to the ccmschools github account.
 git submodule add https://github.com/ccmschools/learnerlink-filter_fontawesome.git fontawesome
 
 #---------- Authentication -----------
@@ -183,11 +182,6 @@ cd usertours
 git checkout -b $moodleVersion origin/$moodleVersion
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
-
-#---------- Admin Tools -----------
-cd $moodleDirectory/$moodleFolderName/admin/tool
-
-git submodule add https://github.com/moodlehq/moodle-tool_lpimportcsv lpimportcsv
 
 #---------- Alternative Login Form -----------
 # 
