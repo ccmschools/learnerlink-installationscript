@@ -116,13 +116,19 @@ git submodule add https://github.com/damyon/moodle-atto_count.git count
 #---------- Enrolment Methods -----------
 cd $moodleDirectory/$moodleFolderName/enrol
 
-git submodule add https://github.com/ccmschools/enrol_autoenrol.git autoenrol
+# I've changed the following repository to one that has been developed more from the original.
+git submodule add https://github.com/bobopinna/moodle-enrol_autoenrol.git autoenrol
 
 #---------- Availability Restrictions -----------
 # 
 cd $moodleDirectory/$moodleFolderName/availability/condition
 
+# The following plugin now has a version-specific branch
 git submodule add https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
+cd mobileapp
+git checkout -b $moodleVersion origin/$moodleVersion
+git commit -a -m "Branch Checked Out"
+cd $moodleDirectory/$moodleFolderName/availability/condition
 
 git submodule add https://github.com/FMCorz/moodle-availability_xp.git xp
 
@@ -131,26 +137,20 @@ cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/gjb2048/moodle-format_topcoll.git topcoll
 cd topcoll
-git checkout -b MOODLE_31 origin/MOODLE_31
+git checkout -b MOODLE_32 origin/MOODLE_32
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/gjb2048/moodle-format_grid.git grid
 cd grid
-git checkout -b MOODLE_31 origin/MOODLE_31
+git checkout -b MOODLE_32 origin/MOODLE_32
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/davidherney/moodle-format_onetopic.git onetopic
-cd onetopic
-git checkout -b MOODLE_31 origin/MOODLE_31
-git commit -a -m "Branch Checked Out"
-cd $moodleDirectory/$moodleFolderName/course/format
 
 #---------- Themes -----------
 cd $moodleDirectory/$moodleFolderName/theme
-
-git submodule add https://github.com/ccmschools/moodle-theme_essential.git essential
 
 #---------- Repositories -----------
 cd $moodleDirectory/$moodleFolderName/repository
@@ -176,12 +176,6 @@ git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
 
 git submodule add https://github.com/ccmschools/local_autogroup.git autogroup
-
-git submodule add https://github.com/andrewnicols/moodle-local_usertours.git usertours
-cd usertours
-git checkout -b $moodleVersion origin/$moodleVersion
-git commit -a -m "Branch Checked Out"
-cd $moodleDirectory/$moodleFolderName/local
 
 #---------- Alternative Login Form -----------
 # 
