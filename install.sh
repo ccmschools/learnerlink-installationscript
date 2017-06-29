@@ -25,6 +25,11 @@ rm -rf $moodleDirectory/$moodleFolderName
 cd $moodleDirectory
 git clone -b $moodleVersion --single-branch https://github.com/moodle/moodle.git $moodleFolderName
 
+# Tell git who you are
+cd $moodleDirectory/$moodleFolderName
+git config --global user.email "$adminEmail"
+git config --global user.name "$adminUser"
+
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 # The following section installs custom plugins for this version of Moodle.		#
 # Note: this code will need to be adjusted each time Moodle is upgraded. 		#
@@ -151,7 +156,6 @@ git submodule add https://github.com/davidherney/moodle-format_onetopic.git onet
 
 #---------- Themes -----------
 cd $moodleDirectory/$moodleFolderName/theme
-
 #---------- Repositories -----------
 cd $moodleDirectory/$moodleFolderName/repository
 git submodule add https://github.com/Microsoft/moodle-repository_office365.git office365
@@ -190,10 +194,10 @@ echo '/local/axcelerate*/' >> .git/info/exclude
 #---------- Wrapping it up -----------
 # **This will currently require authentication**
 cd $moodleDirectory/$moodleFolderName
-git config --global user.email "$adminEmail"
-git config --global user.name "$adminUser"
 git commit -a -m "Moodle and plugins installed"
+# Push a copy of the current installation to the remote github repository as backup
 git remote add mirror https://github.com/ccmschools/learnerlink.git
+git push mirror $moodleVersion
  
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 
