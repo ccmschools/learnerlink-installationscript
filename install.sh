@@ -109,6 +109,7 @@ git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/auth
 
 #---------- Atto Plugins -----------
+#text editor plugins
 cd $moodleDirectory/$moodleFolderName/lib/editor/atto/plugins
 
 git submodule add https://github.com/dthies/moodle-atto_fullscreen.git fullscreen
@@ -125,17 +126,11 @@ git submodule add https://github.com/damyon/moodle-atto_count.git count
 cd $moodleDirectory/$moodleFolderName/enrol
 
 # I've changed the following repository to one that has been developed more from the original.
+# Original creator markward created in a strange format - official. However other users like bobopinna have improved versions
 git submodule add https://github.com/bobopinna/moodle-enrol_autoenrol.git autoenrol
 
 #---------- Availability Restrictions -----------
 # 
-cd $moodleDirectory/$moodleFolderName/availability/condition
-
-# The following plugin now has a version-specific branch
-git submodule add https://github.com/moodlehq/moodle-availability_mobileapp.git mobileapp
-cd mobileapp
-git checkout -b $moodleVersion origin/$moodleVersion
-git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/availability/condition
 
 git submodule add https://github.com/FMCorz/moodle-availability_xp.git xp
@@ -145,13 +140,13 @@ cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/gjb2048/moodle-format_topcoll.git topcoll
 cd topcoll
-git checkout -b MOODLE_32 origin/MOODLE_32
+git checkout -b MOODLE_33 origin/MOODLE_33
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
 git submodule add https://github.com/gjb2048/moodle-format_grid.git grid
 cd grid
-git checkout -b MOODLE_32 origin/MOODLE_32
+git checkout -b MOODLE_33 origin/MOODLE_33
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/course/format
 
@@ -163,7 +158,7 @@ cd $moodleDirectory/$moodleFolderName/theme
 cd $moodleDirectory/$moodleFolderName/repository
 git submodule add https://github.com/Microsoft/moodle-repository_office365.git office365
 cd office365
-git checkout -b $moodleVersion origin/$moodleVersion
+git checkout -b $moodleVersion origin/$moodleVersion # $ = variable. $moodleversion is the standard. Check variables at top of page
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/repository
 
@@ -182,17 +177,20 @@ git checkout -b $moodleVersion origin/$moodleVersion
 git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/local
 
+# This one has been re-uploaded to our repo to restructure the folders in accordance with standard moodle plugin formatting for git repositories.
+# Hasn't been any changes since 2015 - may not need to re-upload in future instances after double check.
 git submodule add https://github.com/ccmschools/local_autogroup.git autogroup
 
 #---------- Alternative Login Form -----------
-# 
+#
 cd $moodleDirectory/$moodleFolderName
-git submodule add https://github.com/ccmschools/learnerlink-loginform.git loginform
+git submodule add https://github.com/ccmschools/learnerlink-loginform.git loginform # Custom developed by PS
 
 #--------- Tell git to ignore the axcelerate plugin ------
 cd $moodleDirectory/$moodleFolderName
-echo '/auth/axcelerate/' >> .git/info/exclude
+echo '/auth/axcelerate/' >> .git/info/exclude # Need to add the ">> .git/info/exclude" ignores config.php(Passwords)
 echo '/local/axcelerate*/' >> .git/info/exclude
+# Allows us to manually add in axcelerate plugin (not actual plugin). 
 
 #---------- Wrapping it up -----------
 # **This will currently require authentication**
