@@ -2,12 +2,12 @@
 apt-get -y update
 
 # Define parameters
-moodleVersion="MOODLE_32_STABLE"
+moodleVersion="MOODLE_33_STABLE"
 moodleDirectory="/opt/bitnami/apps/moodle"
 moodleFolderName="htdocs"
 wwwDaemonUserGroup="bitnami:daemon"
-adminUser="Peter Sercombe"
-adminEmail="peter.sercombe@groves.qld.edu.au"
+adminUser="Learner.Link Admin"
+adminEmail="help@learner.link"
 
 # install moodle additional requirements
 apt-get -y install git-all
@@ -64,8 +64,10 @@ git commit -a -m "Branch Checked Out"
 cd $moodleDirectory/$moodleFolderName/blocks
 
 git submodule add https://github.com/davosmith/moodle-block_checklist.git checklist
+# This one hasn't been updated in 2 years, so might cause issues. Look here in case something goes wrong.
 
 git submodule add https://bitbucket.org/mikegrant/bcu-course-checks-block.git bcu_course_checks
+# Similarly this one may cause issues.
 
 git submodule add https://github.com/Hipjea/studentstracker.git studentstracker
 
@@ -74,6 +76,7 @@ git submodule add https://github.com/deraadt/moodle-block_completion_progress.gi
 git submodule add https://github.com/FMCorz/moodle-block_xp.git xp
 
 git submodule add https://github.com/deraadt/moodle-block_heatmap.git heatmap
+# No 3.3 compatibility listed, see how it goes. 
 
 git submodule add https://github.com/jleyva/moodle-block_configurablereports.git configurable_reports
 cd configurable_reports
